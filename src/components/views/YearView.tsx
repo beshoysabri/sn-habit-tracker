@@ -196,7 +196,7 @@ function YearMonthBlock({
               rowElements.push(
                 <div
                   key={day}
-                  className={`habit-cell ${cellClass} ${today ? 'cell-today' : ''}`}
+                  className={`habit-cell cell-aggregate ${cellClass} ${today ? 'cell-today' : ''}`}
                   style={cellStyle}
                   title={`${getShortMonthName(month)} ${day}: ${totalDone}/${totalScheduled}`}
                 >

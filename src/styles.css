@@ -952,6 +952,18 @@ body.sn-embedded {
   transform: none;
 }
 
+.habit-cell.cell-aggregate {
+  cursor: default;
+}
+
+.habit-cell.cell-aggregate:hover {
+  transform: none;
+}
+
+.habit-cell.cell-aggregate:active {
+  transform: none;
+}
+
 .habit-cell.cell-today {
   border: 2px solid var(--ht-accent);
 }
