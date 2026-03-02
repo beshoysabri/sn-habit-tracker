@@ -199,7 +199,6 @@ body.sn-embedded {
 .ht-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: 10px 16px;
   border-bottom: 1px solid var(--ht-border);
   flex-shrink: 0;
@@ -223,6 +222,7 @@ body.sn-embedded {
   display: flex;
   align-items: center;
   gap: 8px;
+  margin-left: auto;
 }
 
 .ht-view-toggle {
@@ -1940,14 +1940,25 @@ body.sn-embedded {
   .view-label-full { display: none; }
   .view-label-short { display: inline; }
   .ht-view-btn { padding: 6px 10px; flex: 1; text-align: center; }
-  .ht-view-toggle { flex: 1; }
 
-  /* Header compact */
+  /* Header compact — two-row layout */
   .ht-header {
     padding: 8px 12px;
-    gap: 8px;
+    gap: 6px;
+    flex-wrap: wrap;
   }
-  .ht-header-left { flex: 1; min-width: 0; }
+  .ht-header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+  }
+  .ht-view-toggle {
+    order: 10;
+    width: 100%;
+    flex: unset;
+  }
 
   /* Step 5: Mobile sidebar drawer */
   .ht-sidebar {

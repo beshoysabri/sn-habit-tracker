@@ -24,18 +24,18 @@ export function Header({ data, view, onViewChange, onAddHabit, onToggleSidebar }
       <div className="ht-header-left">
         <button className="ht-menu-btn" onClick={onToggleSidebar} aria-label="Toggle sidebar">☰</button>
         <span className="ht-year-display">{data.year}</span>
-        <div className="ht-view-toggle">
-          {VIEW_LABELS.map(v => (
-            <button
-              key={v.key}
-              className={`ht-view-btn ${view === v.key ? 'active' : ''}`}
-              onClick={() => onViewChange(v.key)}
-            >
-              <span className="view-label-full">{v.label}</span>
-              <span className="view-label-short">{v.short}</span>
-            </button>
-          ))}
-        </div>
+      </div>
+      <div className="ht-view-toggle">
+        {VIEW_LABELS.map(v => (
+          <button
+            key={v.key}
+            className={`ht-view-btn ${view === v.key ? 'active' : ''}`}
+            onClick={() => onViewChange(v.key)}
+          >
+            <span className="view-label-full">{v.label}</span>
+            <span className="view-label-short">{v.short}</span>
+          </button>
+        ))}
       </div>
       <div className="ht-header-right">
         <button className="ht-add-btn" onClick={onAddHabit}>
