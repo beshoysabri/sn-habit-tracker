@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import type { Habit, HabitTrackerData } from '../../types/habit.ts';
 import {
   getDaysInMonth,
@@ -96,7 +96,7 @@ function YearMonthBlock({
       <div className="year-month-label">{getShortMonthName(month)}</div>
       <div className="year-month-grid" style={{ gridTemplateColumns: 'auto repeat(7, 1fr)' }}>
         {rows.map((row, ri) => {
-          const rowElements: JSX.Element[] = [
+          const rowElements: React.ReactElement[] = [
             <div key={`wn-${ri}`} className="year-week-number">{row.weekNum}</div>
           ];
           row.cells.forEach((day, ci) => {
