@@ -1333,14 +1333,14 @@ body.sn-embedded {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 28px;
+  height: 28px;
   border: 2px solid var(--ht-border);
   background: transparent;
-  border-radius: 50%;
+  border-radius: 6px;
   cursor: pointer;
   transition: all var(--ht-transition);
-  font-size: 16px;
+  font-size: 14px;
   flex-shrink: 0;
 }
 
@@ -1351,6 +1351,7 @@ body.sn-embedded {
 .day-toggle-btn.done {
   border-color: transparent;
   color: #fff;
+  font-size: 13px;
 }
 
 .day-toggle-btn.skipped {
@@ -1927,7 +1928,7 @@ body.sn-embedded {
   /* Step 3: Enlarge touch targets */
   .month-nav-btn { width: 36px; height: 36px; }
   .day-counter-btn { width: 44px; height: 44px; font-size: 18px; }
-  .day-toggle-btn { min-height: 44px; }
+  .day-toggle-btn { width: 36px; height: 36px; font-size: 16px; }
   .ht-icon-btn { width: 36px; height: 36px; }
   .modal-close-btn { width: 36px; height: 36px; }
   .ht-shortcuts-btn { width: 28px; height: 28px; font-size: 12px; }
