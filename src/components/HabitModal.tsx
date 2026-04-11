@@ -130,13 +130,13 @@ export function HabitModal({ habit, year, groups, onSave, onClose }: HabitModalP
 
       {groups.length > 0 && (
         <div className="form-group">
-          <label className="form-label">Group</label>
+          <label className="form-label">Life Area</label>
           <select
             className="form-select"
             value={groupId}
             onChange={(e) => setGroupId(e.target.value)}
           >
-            <option value="">No Group</option>
+            <option value="">No Life Area</option>
             {groups.sort((a, b) => a.sortOrder - b.sortOrder).map(g => (
               <option key={g.id} value={g.id}>{g.name}</option>
             ))}

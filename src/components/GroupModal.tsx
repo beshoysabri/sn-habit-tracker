@@ -28,7 +28,7 @@ export function GroupModal({ group, onSave, onClose }: GroupModalProps) {
 
   return (
     <Modal
-      title={isEdit ? 'Edit Group' : 'New Group'}
+      title={isEdit ? 'Edit Life Area' : 'New Life Area'}
       onClose={onClose}
       footer={
         <>

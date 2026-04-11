@@ -47,7 +47,6 @@ export function HabitSidebar({
     });
   };
 
-  // Get only the real groups (not null/ungrouped) in their current sorted order
   const sortedGroups = useMemo(
     () => [...(data.groups ?? [])].sort((a, b) => a.sortOrder - b.sortOrder),
     [data.groups]
@@ -57,7 +56,6 @@ export function HabitSidebar({
     setDragGroupId(groupId);
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text/plain', groupId);
-    // Make the drag image slightly transparent
     if (e.currentTarget instanceof HTMLElement) {
       e.currentTarget.style.opacity = '0.5';
     }
@@ -104,16 +102,13 @@ export function HabitSidebar({
       return;
     }
 
-    // Build new order: move dragGroupId to just before targetId
     const currentOrder = sortedGroups.map(g => g.id);
     const fromIdx = currentOrder.indexOf(dragGroupId);
     const toIdx = currentOrder.indexOf(targetId);
 
     if (fromIdx < 0 || toIdx < 0) return;
 
-    // Remove from current position
     const newOrder = currentOrder.filter(id => id !== dragGroupId);
-    // Insert before the target
     const insertIdx = newOrder.indexOf(targetId);
     newOrder.splice(insertIdx, 0, dragGroupId);
 
@@ -127,27 +122,11 @@ export function HabitSidebar({
     <div className="ht-sidebar">
       <div className="ht-sidebar-header">
         <span>Habits ({activeHabits.length})</span>
-        <div style={{ display: 'flex', gap: 2 }}>
-          <button
-            className="ht-sidebar-add-btn"
-            onClick={onAddGroup}
-            title="Add group"
-          >
-            G
-          </button>
-          <button
-            className="ht-sidebar-add-btn"
-            onClick={onAddHabit}
-            title="Add habit"
-          >
-            +
-          </button>
-        </div>
       </div>
       <div className="ht-sidebar-list">
         {activeHabits.length === 0 ? (
           <div className="ht-sidebar-empty">
-            No habits yet.<br />Click + to add one.
+            No habits yet.<br />Click + Add Habit below.
           </div>
         ) : (
           <>
@@ -183,7 +162,7 @@ export function HabitSidebar({
                     <button
                       className="ht-sidebar-group-edit"
                       onClick={() => onEditGroup(group)}
-                      title="Edit group"
+                      title="Edit life area"
                     >
                       ···
                     </button>
@@ -211,6 +190,10 @@ export function HabitSidebar({
             ))}
           </>
         )}
+      </div>
+      <div className="ht-sidebar-footer">
+        <button className="ht-sidebar-footer-btn" onClick={onAddHabit}>+ Add Habit</button>
+        <button className="ht-sidebar-footer-btn" onClick={onAddGroup}>+ Life Area</button>
       </div>
     </div>
   );

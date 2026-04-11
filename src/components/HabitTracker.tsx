@@ -113,10 +113,10 @@ export function HabitTracker({ data, onChange }: HabitTrackerProps) {
     if (existing >= 0) {
       newGroups = [...groups];
       newGroups[existing] = group;
-      showToast('Group updated');
+      showToast('Life area updated');
     } else {
       newGroups = [...groups, group];
-      showToast('Group created');
+      showToast('Life area created');
     }
     onChange({ ...data, groups: newGroups });
     setShowGroupModal(false);
@@ -132,7 +132,7 @@ export function HabitTracker({ data, onChange }: HabitTrackerProps) {
     setConfirmDeleteGroup(null);
     setEditingGroup(undefined);
     setShowGroupModal(false);
-    showToast('Group deleted');
+    showToast('Life area deleted');
   }, [data, onChange, showToast]);
 
   // -- Title editing --
@@ -514,9 +514,9 @@ export function HabitTracker({ data, onChange }: HabitTrackerProps) {
 
       {confirmDeleteGroup && (
         <ConfirmDialog
-          title="Delete Group"
-          message="Delete this group? Habits in this group will become ungrouped (not deleted)."
-          confirmLabel="Delete Group"
+          title="Delete Life Area"
+          message="Delete this life area? Habits in it will become ungrouped (not deleted)."
+          confirmLabel="Delete Life Area"
           danger
           onConfirm={() => handleDeleteGroup(confirmDeleteGroup)}
           onCancel={() => setConfirmDeleteGroup(null)}

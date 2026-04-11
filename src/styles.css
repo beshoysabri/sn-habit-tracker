@@ -456,24 +456,31 @@ body.sn-embedded {
   color: var(--ht-muted);
 }
 
-.ht-sidebar-add-btn {
+.ht-sidebar-footer {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 22px;
-  height: 22px;
-  border: none;
+  gap: 6px;
+  padding: 8px 10px;
+  border-top: 1px solid var(--ht-border);
+}
+
+.ht-sidebar-footer-btn {
+  flex: 1;
+  padding: 8px 0;
+  border: 1px dashed var(--ht-border);
   background: transparent;
   color: var(--ht-muted);
-  border-radius: 4px;
+  border-radius: var(--ht-radius-xs);
   cursor: pointer;
-  font-size: 14px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
   transition: all var(--ht-transition);
 }
 
-.ht-sidebar-add-btn:hover {
+.ht-sidebar-footer-btn:hover {
   color: var(--ht-accent);
-  background: var(--ht-card-hover);
+  border-color: var(--ht-accent);
+  background: color-mix(in srgb, var(--ht-accent) 8%, transparent);
 }
 
 .ht-sidebar-list {
@@ -2006,7 +2013,7 @@ body.sn-embedded {
   .ht-icon-btn { width: 44px; height: 44px; }
   .modal-close-btn { width: 44px; height: 44px; }
   .ht-shortcuts-btn { width: 36px; height: 36px; font-size: 13px; }
-  .ht-sidebar-add-btn { width: 44px; min-height: 48px; font-size: 16px; }
+  .ht-sidebar-footer-btn { min-height: 44px; font-size: 13px; }
   .ht-sidebar-item { min-height: 44px; padding: 10px 12px; }
   .day-btn { min-width: 44px; min-height: 44px; }
   .icon-picker-btn { width: 44px; height: 44px; }
