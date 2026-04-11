@@ -230,7 +230,7 @@ body.sn-embedded {
 }
 
 .ht-title-text {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--ht-fg);
   white-space: nowrap;
@@ -255,7 +255,7 @@ body.sn-embedded {
 }
 
 .ht-title-input {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   font-family: inherit;
   color: var(--ht-fg);
