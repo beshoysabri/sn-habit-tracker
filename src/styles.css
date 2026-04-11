@@ -471,7 +471,7 @@ body.sn-embedded {
   color: var(--ht-muted);
   border-radius: var(--ht-radius-xs);
   cursor: pointer;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   font-family: inherit;
   transition: all var(--ht-transition);
@@ -1614,7 +1614,7 @@ body.sn-embedded {
 }
 
 .stats-card-label {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
