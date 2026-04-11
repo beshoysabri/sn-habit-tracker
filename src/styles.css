@@ -212,7 +212,7 @@ body.sn-embedded {
 .ht-header-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
 }
 
 .ht-year-display {
@@ -436,7 +436,7 @@ body.sn-embedded {
    Sidebar
    ======================================== */
 .ht-sidebar {
-  width: 220px;
+  width: 260px;
   border-right: 1px solid var(--ht-border);
   display: flex;
   flex-direction: column;
@@ -656,6 +656,7 @@ body.sn-embedded {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
   padding: 6px 16px;
   border-top: 1px solid var(--ht-border);
   font-size: 11px;
@@ -685,7 +686,7 @@ body.sn-embedded {
   border-radius: 14px;
   box-shadow: var(--ht-shadow-lg);
   width: 100%;
-  max-width: 480px;
+  max-width: 520px;
   max-height: 85vh;
   display: flex;
   flex-direction: column;
@@ -797,7 +798,7 @@ body.sn-embedded {
 
 .form-select {
   width: 100%;
-  padding: 8px 12px;
+  padding: 8px 28px 8px 12px;
   border: 1px solid var(--ht-border);
   border-radius: var(--ht-radius-sm);
   background: var(--ht-card-bg);
@@ -807,6 +808,10 @@ body.sn-embedded {
   outline: none;
   cursor: pointer;
   transition: border-color var(--ht-transition);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23a1a1aa' stroke-width='2' stroke-linecap='round'%3E%3Cpolyline points='2,4 6,8 10,4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
 }
 
 .form-select:focus {
@@ -872,6 +877,24 @@ body.sn-embedded {
 
 .btn-danger:hover {
   background: var(--ht-danger);
+  color: #fff;
+}
+
+.btn-success {
+  padding: 6px 14px;
+  border: 1px solid var(--ht-success);
+  background: transparent;
+  color: var(--ht-success);
+  border-radius: var(--ht-radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all var(--ht-transition);
+}
+
+.btn-success:hover {
+  background: var(--ht-success);
   color: #fff;
 }
 
@@ -1085,7 +1108,7 @@ body.sn-embedded {
    Month View
    ======================================== */
 .month-view {
-  max-width: 480px;
+  max-width: 520px;
 }
 
 .month-view-header {
@@ -1564,7 +1587,7 @@ body.sn-embedded {
    Habit Detail Panel
    ======================================== */
 .habit-detail {
-  max-width: 480px;
+  max-width: 520px;
 }
 
 .habit-detail-header {
@@ -1695,7 +1718,7 @@ body.sn-embedded {
   background: var(--ht-panel-bg);
   border: 1px solid var(--ht-border);
   border-radius: var(--ht-radius-sm);
-  box-shadow: var(--ht-shadow-md);
+  box-shadow: var(--ht-shadow-lg);
   padding: 4px;
   margin-top: 4px;
   animation: fadeIn 0.12s ease;
@@ -1713,7 +1736,7 @@ body.sn-embedded {
   color: var(--ht-fg);
   font-size: 13px;
   font-family: inherit;
-  border-radius: 6px;
+  border-radius: var(--ht-radius-xs);
   cursor: pointer;
   transition: background var(--ht-transition);
 }
