@@ -122,7 +122,8 @@ export function HabitSidebar({
   return (
     <div className="ht-sidebar">
       <div className="ht-sidebar-header">
-        <span>Habits ({activeHabits.length})</span>
+        <span className="ht-sidebar-title">My Habits</span>
+        <span className="ht-sidebar-count">{activeHabits.length} active</span>
       </div>
       <div className="ht-sidebar-list">
         {activeHabits.length === 0 ? (
@@ -143,6 +144,7 @@ export function HabitSidebar({
                     className={`ht-sidebar-group-header ${dragGroupId === group.id ? 'dragging' : ''} ${dropTargetId === group.id ? 'drop-target' : ''}`}
                     style={{ background: hexToRgba(group.color, 0.08) }}
                     draggable
+                    onClick={() => toggleCollapse(group.id)}
                     onDragStart={(e) => handleDragStart(e, group.id)}
                     onDragEnd={handleDragEnd}
                     onDragEnter={(e) => handleDragEnter(e, group.id)}
@@ -150,34 +152,36 @@ export function HabitSidebar({
                     onDragOver={handleDragOver}
                     onDrop={(e) => handleDrop(e, group.id)}
                   >
-                    <div
-                      className="ht-sidebar-group-toggle"
-                      onClick={() => toggleCollapse(group.id)}
+                    <span className="ht-sidebar-drag-handle" title="Drag to reorder">&#x2807;</span>
+                    <span className="ht-sidebar-section-dot" style={{ background: group.color }} />
+                    <span className="ht-sidebar-group-name">{group.name}</span>
+                    <span
+                      className="ht-sidebar-group-count"
+                      style={{ background: hexToRgba(group.color, 0.15), color: group.color }}
                     >
-                      <span className="ht-sidebar-drag-handle" title="Drag to reorder">⠿</span>
-                      <span className="ht-sidebar-group-arrow">
-                        {collapsed.has(group.id) ? '▸' : '▾'}
-                      </span>
-                      <div className="ht-sidebar-color" style={{ background: group.color }} />
-                      <span className="ht-sidebar-group-name">{group.name}</span>
-                    </div>
+                      {habits.length}
+                    </span>
                     <button
                       className="ht-sidebar-group-edit"
-                      onClick={() => onEditGroup(group)}
+                      onClick={(e) => { e.stopPropagation(); onEditGroup(group); }}
                       title="Edit life area"
                     >
-                      ···
+                      &#x22EF;
                     </button>
+                    <span className={`ht-sidebar-group-arrow ${collapsed.has(group.id) ? 'collapsed' : ''}`}>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+                    </span>
                   </div>
                 )}
                 {group === null && grouped.length > 1 && (
-                  <div className="ht-sidebar-group-header">
-                    <div className="ht-sidebar-group-toggle">
-                      <span className="ht-sidebar-group-name" style={{ opacity: 0.5 }}>Ungrouped</span>
-                    </div>
+                  <div className="ht-sidebar-group-header" onClick={() => toggleCollapse('__ungrouped')}>
+                    <span className="ht-sidebar-group-name" style={{ opacity: 0.6 }}>Ungrouped</span>
+                    <span className={`ht-sidebar-group-arrow ${collapsed.has('__ungrouped') ? 'collapsed' : ''}`}>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+                    </span>
                   </div>
                 )}
-                {!(group && collapsed.has(group.id)) &&
+                {!(group && collapsed.has(group.id)) && !(group === null && collapsed.has('__ungrouped')) &&
                   habits.map(habit => (
                     <HabitSidebarItem
                       key={habit.id}
