@@ -55,4 +55,4 @@ export interface HabitEntry {
 
 // ======= VIEW TYPES =======
 
-export type ViewType = 'year' | 'timeline' | 'month' | 'week' | 'day';
+export type ViewType = 'year' | 'timeline' | 'month' | 'week' | 'day' | 'analytics';

@@ -21,6 +21,7 @@ interface WeekViewProps {
   onToggleEntry: (habitId: string, dateStr: string) => void;
   onCounterIncrement: (habitId: string, dateStr: string) => void;
   onCounterDecrement: (habitId: string, dateStr: string) => void;
+  onUpdateNote?: (habitId: string, dateStr: string, note: string) => void;
 }
 
 export function WeekView({ data, weekStart, onWeekChange, onToggleEntry, onCounterIncrement, onCounterDecrement }: WeekViewProps) {
@@ -153,15 +154,16 @@ function HabitWeekRow({
             <div
               key={i}
               className={`week-cell ${cellClass}`}
-              style={{ ...cellStyle, ...(today ? { border: '2px solid var(--ht-accent)' } : {}) }}
+              style={{ ...cellStyle, position: 'relative', ...(today ? { border: '2px solid var(--ht-accent)' } : {}) }}
               onClick={() => onToggle(habit.id, ds)}
             >
               {content}
+              {entry?.note && <span className="week-note-dot" />}
             </div>
           );
         } else {
           const val = entry?.value ?? 0;
-          let cellClass = val > 0 ? 'cell-done' : 'cell-empty';
+          const cellClass = val > 0 ? 'cell-done' : 'cell-empty';
           const pctFill = habit.counterTarget ? Math.min(val / habit.counterTarget, 1) : (val > 0 ? 1 : 0);
           const cellStyle = val > 0 ? { background: hexToRgba(habit.color, 0.3 + pctFill * 0.5) } : {};
 
@@ -169,12 +171,13 @@ function HabitWeekRow({
             <div
               key={i}
               className={`week-cell ${cellClass}`}
-              style={{ ...cellStyle, ...(today ? { border: '2px solid var(--ht-accent)' } : {}) }}
+              style={{ ...cellStyle, position: 'relative', ...(today ? { border: '2px solid var(--ht-accent)' } : {}) }}
               onClick={() => onIncrement(habit.id, ds)}
               onContextMenu={(e) => { e.preventDefault(); onDecrement(habit.id, ds); }}
-              title={`${val}${habit.counterUnit ? ' ' + habit.counterUnit : ''} (right-click: −1)`}
+              title={`${val}${habit.counterUnit ? ' ' + habit.counterUnit : ''}${entry?.note ? ' — ' + entry.note : ''} (right-click: −1)`}
             >
               {val > 0 ? val : ''}
+              {entry?.note && <span className="week-note-dot" />}
             </div>
           );
         }

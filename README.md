@@ -1,17 +1,19 @@
-# Super Habit Tracker
+# Habit Tracker
 
-A powerful habit tracking editor plugin for [Standard Notes](https://standardnotes.com). Track daily habits across an entire year with heatmap calendars, timeline views, streaks, and detailed statistics — all stored securely inside your encrypted notes.
+A powerful habit tracking editor plugin for [Standard Notes](https://standardnotes.com). Track daily habits across an entire year with heatmap calendars, timeline views, streaks, analytics dashboard, and detailed statistics — all stored securely inside your encrypted notes.
 
 ## Features
 
-- **5 Views** — Year Calendar (heatmap), Year Timeline (horizontal scroll), Month, Week, and Day
+- **6 Views** — Year Calendar (heatmap), Year Timeline (horizontal scroll), Month, Week, Day, and Analytics Dashboard
 - **Boolean & Counter Tracking** — Mark habits done/skipped or track numeric values with targets
 - **Flexible Scheduling** — Daily, specific days of the week, or custom frequency
 - **Habit Groups** — Organize habits into color-coded groups with drag-and-drop reordering
-- **Streaks & Statistics** — Current streak, best streak, completion rate, monthly bar charts
+- **Entry Notes** — Add notes to individual habit entries for context and reflection
+- **Streaks & Statistics** — Current streak, best streak, completion rate, monthly charts
+- **Analytics Dashboard** — Overview metrics, group performance, top performers, streak leaders, completion trends
 - **Calendar Week Numbers** — ISO week numbers displayed in all calendar views
 - **Export** — CSV, Markdown, Excel (.xlsx), PDF, and screenshot (PNG) export
-- **Keyboard Shortcuts** — Navigate views (1-5), cycle habits (arrows), add habits (N), and more
+- **Keyboard Shortcuts** — Navigate views (1-6), cycle habits (arrows), add habits (N), and more
 - **Theme-Aware** — Adapts to Standard Notes light/dark themes via CSS variables
 - **Fully Responsive** — Optimized for desktop, tablet, and mobile with a slide-in sidebar drawer
 - **Zero Dependencies on External Services** — All data lives in your Standard Notes note
@@ -23,10 +25,10 @@ A powerful habit tracking editor plugin for [Standard Notes](https://standardnot
 3. Scroll to **Install Custom Plugin**
 4. Paste this URL:
    ```
-   https://beshoysabri.github.io/sn-super-habit-tracker/ext.json
+   https://beshoysabri.github.io/sn-habit-tracker/ext.json
    ```
 5. Click **Install**
-6. Create a new note and select **Super Habit Tracker** as the editor
+6. Create a new note and select **Habit Tracker** as the editor
 
 ## Development
 
@@ -38,8 +40,8 @@ A powerful habit tracking editor plugin for [Standard Notes](https://standardnot
 ### Setup
 
 ```bash
-git clone https://github.com/beshoysabri/sn-super-habit-tracker.git
-cd sn-super-habit-tracker
+git clone https://github.com/beshoysabri/sn-habit-tracker.git
+cd sn-habit-tracker
 npm install
 npm run dev
 ```
@@ -59,6 +61,7 @@ Open `http://localhost:5173` to view the app standalone (uses a dark fallback th
 
 - **React 19** + **TypeScript 5.9**
 - **Vite 7** — bundler and dev server
+- **Recharts** — data visualization
 - **Standard Notes Editor API** — iframe communication via `postMessage`
 - No UI framework — custom CSS with CSS variables for SN theme integration
 
@@ -80,18 +83,19 @@ src/
       MonthView.tsx          # Single month calendar
       WeekView.tsx           # 7-day grid with all habits
       DayView.tsx            # Single day checklist
+      AnalyticsView.tsx      # Analytics dashboard with metrics and charts
     shared/
-      Modal.tsx, ConfirmDialog.tsx, ExportMenu.tsx, ...
+      Modal.tsx, ConfirmDialog.tsx, ExportMenu.tsx, Linkify.tsx, HabitChart.tsx, ...
   lib/
     sn-api.ts               # Standard Notes iframe bridge
     calendar.ts             # Date utilities, week numbers
-    stats.ts                # Streak and completion calculations
+    stats.ts                # Streak, completion, and analytics calculations
     export-*.ts             # CSV, Markdown, XLSX, PDF exporters
-    icons.tsx               # Lucide icon set
-    colors.ts               # Hex-to-rgba utility
+    icons.tsx               # SVG icon set
+    colors.ts               # Color palette and utilities
   types/
     habit.ts                # TypeScript interfaces (Habit, HabitGroup, HabitEntry, etc.)
-  styles.css                # All styles (single file, ~2200 lines)
+  styles.css                # All styles (single file)
 ```
 
 ## Deployment
@@ -102,7 +106,7 @@ Pushes to `master` trigger a GitHub Actions workflow that builds and deploys to 
 
 | Key | Action |
 |-----|--------|
-| `1`-`5` | Switch view (Year, Timeline, Month, Week, Day) |
+| `1`-`6` | Switch view (Year, Timeline, Month, Week, Day, Analytics) |
 | `N` | New habit |
 | `Arrow Up/Down` | Select previous/next habit |
 | `Arrow Left/Right` | Navigate month/week/day |

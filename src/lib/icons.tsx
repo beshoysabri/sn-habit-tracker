@@ -189,11 +189,11 @@ export const ICON_LIST: { name: string; label: string; category: string }[] = [
 
 export const DEFAULT_ICON = 'target';
 
-export function HabitIcon({ name, size = 16 }: { name: string; size?: number }) {
+export function HabitIcon({ name, size = 16, color }: { name: string; size?: number; color?: string }) {
   const renderer = ICON_RENDERERS[name];
   if (!renderer) {
     // Legacy emoji fallback
-    return <span style={{ fontSize: size, lineHeight: 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: size, height: size }}>{name}</span>;
+    return <span style={{ fontSize: size, lineHeight: 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: size, height: size, color }}>{name}</span>;
   }
   return (
     <svg
@@ -201,7 +201,7 @@ export function HabitIcon({ name, size = 16 }: { name: string; size?: number }) 
       height={size}
       viewBox="0 0 24 24"
       fill="none"
-      stroke="currentColor"
+      stroke={color || 'currentColor'}
       strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"

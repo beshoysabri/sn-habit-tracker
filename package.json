@@ -1,14 +1,14 @@
 {
-  "name": "sn-super-habit-tracker",
+  "name": "sn-habit-tracker",
   "private": true,
   "version": "1.0.0",
   "type": "module",
   "description": "A modern habit tracker editor for Standard Notes with year calendar views, boolean/counter tracking, streaks, and export",
   "repository": {
     "type": "git",
-    "url": "https://github.com/beshoysabri/sn-super-habit-tracker.git"
+    "url": "https://github.com/beshoysabri/sn-habit-tracker.git"
   },
-  "homepage": "https://beshoysabri.github.io/sn-super-habit-tracker/",
+  "homepage": "https://beshoysabri.github.io/sn-habit-tracker/",
   "keywords": [
     "Standard Notes",
     "Habit Tracker",
@@ -25,12 +25,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "jspdf": "^2.5.2",
+    "jspdf-autotable": "^3.8.4",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "recharts": "^3.8.1",
     "uuid": "^13.0.0",
-    "xlsx": "^0.18.5",
-    "jspdf": "^2.5.2",
-    "jspdf-autotable": "^3.8.4"
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

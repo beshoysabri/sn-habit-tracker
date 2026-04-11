@@ -25,16 +25,6 @@
   --ht-warning: var(--sn-stylekit-warning-color, #eab308);
   --ht-muted: var(--sn-stylekit-secondary-foreground-color, #a1a1aa);
 
-  /* Habit preset colors */
-  --ht-color-red: #ef4444;
-  --ht-color-orange: #f97316;
-  --ht-color-yellow: #eab308;
-  --ht-color-green: #22c55e;
-  --ht-color-blue: #3b82f6;
-  --ht-color-indigo: #6366f1;
-  --ht-color-purple: #a855f7;
-  --ht-color-pink: #ec4899;
-
   /* Design tokens */
   --ht-radius: 10px;
   --ht-radius-sm: 8px;
@@ -50,6 +40,19 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+/* ---- Focus Visible ---- */
+:focus-visible {
+  outline: 2px solid var(--ht-accent);
+  outline-offset: 2px;
+}
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--ht-accent);
+  outline-offset: 1px;
 }
 
 html, body, #root {
@@ -234,6 +237,10 @@ body.sn-embedded {
 }
 
 .ht-view-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
   padding: 6px 12px;
   border: none;
   background: transparent;
@@ -243,6 +250,16 @@ body.sn-embedded {
   font-family: inherit;
   cursor: pointer;
   transition: all var(--ht-transition);
+}
+
+.ht-view-btn-icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.ht-view-btn-label {
+  white-space: nowrap;
 }
 
 .ht-view-btn.active {
@@ -777,13 +794,22 @@ body.sn-embedded {
    ======================================== */
 .color-picker {
   display: flex;
-  gap: 6px;
+  gap: 5px;
   flex-wrap: wrap;
+  align-items: center;
+}
+
+.color-preview {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  border: 2px solid var(--ht-border);
+  flex-shrink: 0;
 }
 
 .color-swatch {
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   border: 2px solid transparent;
   cursor: pointer;
@@ -807,7 +833,7 @@ body.sn-embedded {
   cursor: pointer;
   position: relative;
   background: conic-gradient(
-    #ef4444, #f97316, #eab308, #22c55e, #14b8a6, #3b82f6, #a855f7, #ec4899, #ef4444
+    #F67B45, #F4D35E, #B4CFA4, #32769B, #BBA6DD, #CB7876, #F67B45
   );
 }
 
@@ -818,37 +844,6 @@ body.sn-embedded {
   opacity: 0;
   overflow: hidden;
   pointer-events: none;
-}
-
-/* ========================================
-   Emoji Picker
-   ======================================== */
-.emoji-picker-grid {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  gap: 4px;
-}
-
-.emoji-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  border: none;
-  background: transparent;
-  border-radius: var(--ht-radius-xs);
-  cursor: pointer;
-  font-size: 18px;
-  transition: background var(--ht-transition);
-}
-
-.emoji-btn:hover {
-  background: var(--ht-card-hover);
-}
-
-.emoji-btn.selected {
-  background: color-mix(in srgb, var(--ht-accent) 20%, transparent);
 }
 
 /* ========================================
@@ -1925,22 +1920,25 @@ body.sn-embedded {
   .timeline-week-header { font-size: 8px; }
   .year-week-number { font-size: 8px; }
 
-  /* Step 3: Enlarge touch targets */
-  .month-nav-btn { width: 36px; height: 36px; }
+  /* Step 3: Enlarge touch targets (WCAG 2.5.8: 44px minimum) */
+  .month-nav-btn { width: 44px; height: 44px; }
   .day-counter-btn { width: 44px; height: 44px; font-size: 18px; }
-  .day-toggle-btn { width: 36px; height: 36px; font-size: 16px; }
-  .ht-icon-btn { width: 36px; height: 36px; }
-  .modal-close-btn { width: 36px; height: 36px; }
-  .ht-shortcuts-btn { width: 28px; height: 28px; font-size: 12px; }
-  .ht-sidebar-add-btn { width: 32px; height: 32px; font-size: 16px; }
-  .day-btn { min-width: 38px; min-height: 38px; }
-  .icon-picker-btn { width: 36px; height: 36px; }
+  .day-toggle-btn { width: 44px; height: 44px; font-size: 16px; }
+  .ht-icon-btn { width: 44px; height: 44px; }
+  .modal-close-btn { width: 44px; height: 44px; }
+  .ht-shortcuts-btn { width: 36px; height: 36px; font-size: 13px; }
+  .ht-sidebar-add-btn { width: 44px; min-height: 48px; font-size: 16px; }
+  .ht-sidebar-item { min-height: 44px; padding: 10px 12px; }
+  .day-btn { min-width: 44px; min-height: 44px; }
+  .icon-picker-btn { width: 44px; height: 44px; }
+  .ht-menu-btn { width: 44px; height: 44px; }
 
   /* Step 4: Header — show hamburger, short labels */
   .ht-menu-btn { display: flex; }
+  .ht-view-btn { padding: 8px 12px; min-height: 36px; flex: 1; text-align: center; }
   .view-label-full { display: none; }
-  .view-label-short { display: inline; }
-  .ht-view-btn { padding: 6px 10px; flex: 1; text-align: center; }
+  .view-label-short { display: none; }
+  .ht-view-btn-label { display: none; }
 
   /* Header compact — two-row layout */
   .ht-header {
@@ -2194,4 +2192,370 @@ body.sn-embedded {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--ht-muted);
+}
+
+/* ========================================
+   Toast Notifications
+   ======================================== */
+.ht-toast {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ht-fg);
+  color: var(--ht-bg);
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 3000;
+  pointer-events: none;
+  box-shadow: var(--ht-shadow-lg);
+  animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes toastIn {
+  0% { transform: translateX(-50%) translateY(20px); opacity: 0; }
+  100% { transform: translateX(-50%); opacity: 1; }
+}
+
+/* ========================================
+   Celebration Overlay
+   ======================================== */
+.ht-celebration {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+  animation: fadeIn 0.3s ease;
+}
+
+.ht-celebration-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  animation: celebratePop 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ht-celebration-check {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--ht-success) 15%, var(--ht-bg));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ht-celebration-text {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ht-fg);
+}
+
+@keyframes celebratePop {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ========================================
+   Linkify
+   ======================================== */
+.ht-link {
+  color: var(--ht-accent);
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.ht-link:hover {
+  color: var(--ht-fg);
+  text-decoration: underline;
+}
+
+/* ========================================
+   Recharts Chart Container
+   ======================================== */
+.ht-chart {
+  width: 100%;
+  height: 200px;
+  margin-top: 8px;
+}
+
+/* ========================================
+   Entry Notes
+   ======================================== */
+.day-note-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  color: var(--ht-muted);
+  border-radius: var(--ht-radius-xs);
+  cursor: pointer;
+  transition: all var(--ht-transition);
+  flex-shrink: 0;
+}
+
+.day-note-btn:hover,
+.day-note-btn.has-note {
+  color: var(--ht-accent);
+  background: color-mix(in srgb, var(--ht-accent) 10%, transparent);
+}
+
+.day-note-area {
+  width: 100%;
+  padding: 8px 10px;
+  background: var(--ht-card-hover);
+  border: 1px solid var(--ht-border);
+  border-radius: var(--ht-radius-xs);
+  color: var(--ht-fg);
+  font-family: inherit;
+  font-size: 12px;
+  resize: vertical;
+  min-height: 36px;
+  margin-top: 6px;
+  transition: border-color var(--ht-transition);
+}
+
+.day-note-area:focus {
+  border-color: var(--ht-accent);
+  outline: none;
+}
+
+.day-note-preview {
+  font-size: 11px;
+  color: var(--ht-muted);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+.week-note-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--ht-accent);
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.recent-notes-section {
+  margin-top: 16px;
+}
+
+.recent-notes-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--ht-muted);
+  margin-bottom: 8px;
+}
+
+.recent-note-item {
+  display: flex;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--ht-border);
+}
+
+.recent-note-item:last-child {
+  border-bottom: none;
+}
+
+.recent-note-date {
+  font-size: 11px;
+  color: var(--ht-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.recent-note-text {
+  font-size: 12px;
+  color: var(--ht-fg);
+  line-height: 1.4;
+}
+
+/* ========================================
+   Analytics Dashboard
+   ======================================== */
+.ht-analytics {
+  padding: 4px 0;
+}
+
+.ht-analytics-summary {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  margin-bottom: 20px;
+}
+
+.ht-analytics-card {
+  flex: 0 0 auto;
+  min-width: 120px;
+  padding: 14px 20px;
+  background: var(--ht-card-bg);
+  border: 1px solid var(--ht-border);
+  border-radius: var(--ht-radius);
+  text-align: center;
+}
+
+.ht-analytics-card-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ht-fg);
+  line-height: 1.2;
+}
+
+.ht-analytics-card-value.accent {
+  color: var(--ht-accent);
+}
+
+.ht-analytics-card-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--ht-muted);
+  margin-top: 4px;
+}
+
+.ht-analytics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.ht-analytics-panel {
+  background: var(--ht-card-bg);
+  border: 1px solid var(--ht-border);
+  border-radius: var(--ht-radius);
+  padding: 16px;
+}
+
+.ht-analytics-panel-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--ht-muted);
+  margin-bottom: 12px;
+}
+
+.ht-analytics-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 4px;
+  border-radius: var(--ht-radius-xs);
+  transition: background var(--ht-transition);
+}
+
+.ht-analytics-row.clickable {
+  cursor: pointer;
+}
+
+.ht-analytics-row.clickable:hover {
+  background: var(--ht-card-hover);
+}
+
+.ht-analytics-row-name {
+  flex: 1;
+  font-size: 13px;
+  color: var(--ht-fg);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ht-analytics-row-value {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ht-muted);
+  white-space: nowrap;
+}
+
+.ht-analytics-row-value.danger {
+  color: var(--ht-danger);
+}
+
+.ht-analytics-color-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.ht-analytics-bar {
+  width: 80px;
+  height: 6px;
+  background: var(--ht-border);
+  border-radius: 3px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.ht-analytics-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.ht-analytics-empty {
+  font-size: 13px;
+  color: var(--ht-muted);
+  text-align: center;
+  padding: 20px;
+}
+
+.ht-weekday-heatmap {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.ht-weekday-cell {
+  text-align: center;
+  padding: 8px 4px;
+  border-radius: var(--ht-radius-xs);
+}
+
+.ht-weekday-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--ht-muted);
+  margin-bottom: 4px;
+}
+
+.ht-weekday-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ht-fg);
+}
+
+@media (max-width: 768px) {
+  .ht-analytics-grid {
+    grid-template-columns: 1fr;
+  }
+  .ht-analytics-card {
+    min-width: 100px;
+    padding: 10px 14px;
+  }
+  .ht-analytics-card-value {
+    font-size: 18px;
+  }
 }

@@ -12,7 +12,7 @@ export function YearSetup({ onConfirm }: YearSetupProps) {
     <div className="year-setup">
       <div className="year-setup-card">
         <div className="year-setup-icon">📅</div>
-        <h1 className="year-setup-title">Super Habit Tracker</h1>
+        <h1 className="year-setup-title">Habit Tracker</h1>
         <p className="year-setup-desc">
           Track your habits across an entire year. Pick a year to get started.
         </p>

@@ -13,6 +13,7 @@ import { YearTimelineView } from './views/YearTimelineView.tsx';
 import { MonthView } from './views/MonthView.tsx';
 import { WeekView } from './views/WeekView.tsx';
 import { DayView } from './views/DayView.tsx';
+import { AnalyticsView } from './views/AnalyticsView.tsx';
 import { HabitIcon } from '../lib/icons.tsx';
 
 interface HabitTrackerProps {
@@ -41,6 +42,8 @@ export function HabitTracker({ data, onChange }: HabitTrackerProps) {
   const [editingGroup, setEditingGroup] = useState<HabitGroup | undefined>(undefined);
   const [confirmDeleteGroup, setConfirmDeleteGroup] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
+  const [celebration, setCelebration] = useState<string | null>(null);
 
   const selectedHabit = useMemo(
     () => selectedHabitId ? data.habits.find(h => h.id === selectedHabitId) ?? null : null,
@@ -52,6 +55,19 @@ export function HabitTracker({ data, onChange }: HabitTrackerProps) {
     [data.habits]
   );
 
+  // -- Toast --
+  const showToast = useCallback((message: string) => {
+    setToast(message);
+    setTimeout(() => setToast(null), 2000);
+  }, []);
+
+  // -- Celebration --
+  useEffect(() => {
+    if (!celebration) return;
+    const timer = setTimeout(() => setCelebration(null), 1500);
+    return () => clearTimeout(timer);
+  }, [celebration]);
+
   // -- Habit CRUD --
   const handleSaveHabit = useCallback((habit: Habit) => {
     const existing = data.habits.findIndex(h => h.id === habit.id);
@@ -59,22 +75,26 @@ export function HabitTracker({ data, onChange }: HabitTrackerProps) {
     if (existing >= 0) {
       newHabits = [...data.habits];
       newHabits[existing] = habit;
+      showToast('Habit updated');
     } else {
       newHabits = [...data.habits, habit];
+      showToast('Habit created');
     }
     onChange({ ...data, habits: newHabits });
     setShowHabitModal(false);
     setEditingHabit(undefined);
-  }, [data, onChange]);
+  }, [data, onChange, showToast]);
 
   const handleArchiveHabit = useCallback((habitId: string) => {
+    const habit = data.habits.find(h => h.id === habitId);
     const newHabits = data.habits.map(h =>
       h.id === habitId ? { ...h, archived: !h.archived } : h
     );
     onChange({ ...data, habits: newHabits });
     setShowDetail(false);
     setSelectedHabitId(null);
-  }, [data, onChange]);
+    showToast(habit?.archived ? 'Habit unarchived' : 'Habit archived');
+  }, [data, onChange, showToast]);
 
   const handleDeleteHabit = useCallback((habitId: string) => {
     const newHabits = data.habits.filter(h => h.id !== habitId);
@@ -82,7 +102,8 @@ export function HabitTracker({ data, onChange }: HabitTrackerProps) {
     setConfirmDelete(null);
     setShowDetail(false);
     setSelectedHabitId(null);
-  }, [data, onChange]);
+    showToast('Habit deleted');
+  }, [data, onChange, showToast]);
 
   // -- Group CRUD --
   const handleSaveGroup = useCallback((group: HabitGroup) => {
@@ -92,17 +113,18 @@ export function HabitTracker({ data, onChange }: HabitTrackerProps) {
     if (existing >= 0) {
       newGroups = [...groups];
       newGroups[existing] = group;
+      showToast('Group updated');
     } else {
       newGroups = [...groups, group];
+      showToast('Group created');
     }
     onChange({ ...data, groups: newGroups });
     setShowGroupModal(false);
     setEditingGroup(undefined);
-  }, [data, onChange]);
+  }, [data, onChange, showToast]);
 
   const handleDeleteGroup = useCallback((groupId: string) => {
     const newGroups = (data.groups ?? []).filter(g => g.id !== groupId);
-    // Ungroup habits that were in this group
     const newHabits = data.habits.map(h =>
       h.groupId === groupId ? { ...h, groupId: undefined } : h
     );
@@ -110,7 +132,8 @@ export function HabitTracker({ data, onChange }: HabitTrackerProps) {
     setConfirmDeleteGroup(null);
     setEditingGroup(undefined);
     setShowGroupModal(false);
-  }, [data, onChange]);
+    showToast('Group deleted');
+  }, [data, onChange, showToast]);
 
   const handleReorderGroups = useCallback((orderedGroupIds: string[]) => {
     const newGroups = (data.groups ?? []).map(g => {
@@ -128,14 +151,21 @@ export function HabitTracker({ data, onChange }: HabitTrackerProps) {
       const current = entries[dateStr];
 
       if (h.trackingType === 'boolean') {
-        // Cycle: empty → done → skipped → empty
         if (!current || !current.status) {
-          entries[dateStr] = { status: 'done', timestamp: new Date().toISOString() };
+          entries[dateStr] = { ...current, status: 'done', timestamp: new Date().toISOString() };
+          // Celebrate if marking today as done
+          if (dateStr === todayStr()) {
+            setCelebration(h.name);
+          }
         } else if (current.status === 'done') {
           entries[dateStr] = { ...current, status: 'skipped', timestamp: new Date().toISOString() };
         } else {
-          // skipped or missed → clear
-          delete entries[dateStr];
+          const { status: _, timestamp: __, ...rest } = current;
+          if (Object.keys(rest).filter(k => k !== 'note' || !rest.note).length === 0 && !rest.note) {
+            delete entries[dateStr];
+          } else {
+            entries[dateStr] = { ...rest };
+          }
         }
       }
 
@@ -151,6 +181,10 @@ export function HabitTracker({ data, onChange }: HabitTrackerProps) {
       const current = entries[dateStr];
       const val = (current?.value ?? 0) + 1;
       entries[dateStr] = { ...current, value: val, timestamp: new Date().toISOString() };
+      // Celebrate if reaching target today
+      if (dateStr === todayStr() && val === (h.counterTarget ?? 1)) {
+        setCelebration(h.name);
+      }
       return { ...h, entries };
     });
     onChange({ ...data, habits: newHabits });
@@ -162,10 +196,31 @@ export function HabitTracker({ data, onChange }: HabitTrackerProps) {
       const entries = { ...h.entries };
       const current = entries[dateStr];
       const val = Math.max(0, (current?.value ?? 0) - 1);
-      if (val === 0) {
+      if (val === 0 && !current?.note) {
         delete entries[dateStr];
       } else {
         entries[dateStr] = { ...current, value: val, timestamp: new Date().toISOString() };
+      }
+      return { ...h, entries };
+    });
+    onChange({ ...data, habits: newHabits });
+  }, [data, onChange]);
+
+  // -- Entry notes --
+  const handleUpdateNote = useCallback((habitId: string, dateStr: string, note: string) => {
+    const newHabits = data.habits.map(h => {
+      if (h.id !== habitId) return h;
+      const entries = { ...h.entries };
+      const current = entries[dateStr] ?? {};
+      if (note.trim()) {
+        entries[dateStr] = { ...current, note: note.trim() };
+      } else {
+        const { note: _, ...rest } = current;
+        if (Object.keys(rest).length === 0) {
+          delete entries[dateStr];
+        } else {
+          entries[dateStr] = rest;
+        }
       }
       return { ...h, entries };
     });
@@ -212,7 +267,7 @@ export function HabitTracker({ data, onChange }: HabitTrackerProps) {
   }, [activeHabits]);
 
   // -- Keyboard shortcuts --
-  const viewKeys: ViewType[] = ['year', 'timeline', 'month', 'week', 'day'];
+  const viewKeys: ViewType[] = ['year', 'timeline', 'month', 'week', 'day', 'analytics'];
   const sortedActiveHabits = useMemo(
     () => activeHabits.sort((a, b) => a.sortOrder - b.sortOrder),
     [activeHabits]
@@ -225,7 +280,7 @@ export function HabitTracker({ data, onChange }: HabitTrackerProps) {
       if (showHabitModal || showGroupModal || confirmDelete || confirmDeleteGroup) return;
 
       switch (e.key) {
-        case '1': case '2': case '3': case '4': case '5':
+        case '1': case '2': case '3': case '4': case '5': case '6':
           setView(viewKeys[parseInt(e.key) - 1]);
           break;
         case 'n':
@@ -291,6 +346,7 @@ export function HabitTracker({ data, onChange }: HabitTrackerProps) {
         onViewChange={setView}
         onAddHabit={() => { setEditingHabit(undefined); setShowHabitModal(true); }}
         onToggleSidebar={() => setSidebarOpen(s => !s)}
+        onShowShortcuts={() => setShowShortcuts(s => !s)}
       />
 
       <div className={`ht-layout ${sidebarOpen ? 'sidebar-open' : ''}`}>
@@ -321,7 +377,7 @@ export function HabitTracker({ data, onChange }: HabitTrackerProps) {
             />
           ) : (
             <>
-              {selectedHabit && !showDetail && (
+              {selectedHabit && !showDetail && view !== 'analytics' && (
                 <div style={{ marginBottom: 12 }}>
                   <button
                     className="btn-secondary"
@@ -369,6 +425,7 @@ export function HabitTracker({ data, onChange }: HabitTrackerProps) {
                   onToggleEntry={toggleEntry}
                   onCounterIncrement={counterIncrement}
                   onCounterDecrement={counterDecrement}
+                  onUpdateNote={handleUpdateNote}
                 />
               )}
               {view === 'day' && (
@@ -379,6 +436,13 @@ export function HabitTracker({ data, onChange }: HabitTrackerProps) {
                   onToggleEntry={toggleEntry}
                   onCounterIncrement={counterIncrement}
                   onCounterDecrement={counterDecrement}
+                  onUpdateNote={handleUpdateNote}
+                />
+              )}
+              {view === 'analytics' && (
+                <AnalyticsView
+                  data={data}
+                  onSelectHabit={(id) => { setSelectedHabitId(id); setShowDetail(true); }}
                 />
               )}
             </>
@@ -389,14 +453,24 @@ export function HabitTracker({ data, onChange }: HabitTrackerProps) {
       <div className="ht-statusbar">
         <span>Total: {activeHabits.length} habits</span>
         <span>Today: {todayDone}/{todayTotal} done</span>
-        <button
-          className="ht-shortcuts-btn"
-          onClick={() => setShowShortcuts(s => !s)}
-          title="Keyboard shortcuts (?)"
-        >
-          ?
-        </button>
       </div>
+
+      {/* Toast */}
+      {toast && <div className="ht-toast">{toast}</div>}
+
+      {/* Celebration */}
+      {celebration && (
+        <div className="ht-celebration">
+          <div className="ht-celebration-content">
+            <div className="ht-celebration-check">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#22c55e" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="8,17 14,23 24,10"/>
+              </svg>
+            </div>
+            <div className="ht-celebration-text">{celebration}</div>
+          </div>
+        </div>
+      )}
 
       {/* Modals */}
       {showHabitModal && (

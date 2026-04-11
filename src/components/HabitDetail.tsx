@@ -2,6 +2,8 @@ import { useMemo } from 'react';
 import type { Habit, HabitTrackerData } from '../types/habit.ts';
 import { StatsCard } from './shared/StatsCard.tsx';
 import { HabitIcon } from '../lib/icons.tsx';
+import { Linkify } from './shared/Linkify.tsx';
+import { HabitChart } from './shared/HabitChart.tsx';
 import {
   getCompletionRate,
   getCompletionRateForPeriod,
@@ -10,7 +12,7 @@ import {
   getMonthlyCompletionRates,
   getTotalDone,
 } from '../lib/stats.ts';
-import { toDateStr, getShortMonthName } from '../lib/calendar.ts';
+import { toDateStr, formatDateShort } from '../lib/calendar.ts';
 
 interface HabitDetailProps {
   habit: Habit;
@@ -44,6 +46,26 @@ export function HabitDetail({ habit, data, onEdit, onArchive, onDelete, onBack }
     [habit, last7Start, today]
   );
 
+  // Chart data from monthly rates
+  const chartData = useMemo(() => {
+    return monthlyRates.map((rate, i) => ({
+      date: `${year}-${String(i + 1).padStart(2, '0')}-15`,
+      value: rate,
+    }));
+  }, [monthlyRates, year]);
+
+  // Recent notes
+  const recentNotes = useMemo(() => {
+    const notes: { date: string; note: string }[] = [];
+    const entries = Object.entries(habit.entries);
+    for (const [date, entry] of entries) {
+      if (entry.note) {
+        notes.push({ date, note: entry.note });
+      }
+    }
+    return notes.sort((a, b) => b.date.localeCompare(a.date)).slice(0, 5);
+  }, [habit.entries]);
+
   return (
     <div className="habit-detail">
       <div style={{ marginBottom: 12 }}>
@@ -55,7 +77,11 @@ export function HabitDetail({ habit, data, onEdit, onArchive, onDelete, onBack }
         <span className="habit-detail-icon"><HabitIcon name={habit.icon} size={32} /></span>
         <div>
           <div className="habit-detail-name">{habit.name}</div>
-          {habit.description && <div className="habit-detail-desc">{habit.description}</div>}
+          {habit.description && (
+            <div className="habit-detail-desc">
+              <Linkify>{habit.description}</Linkify>
+            </div>
+          )}
         </div>
       </div>
 
@@ -78,24 +104,22 @@ export function HabitDetail({ habit, data, onEdit, onArchive, onDelete, onBack }
 
       <div className="monthly-chart">
         <div className="monthly-chart-title">Monthly Completion</div>
-        <div className="monthly-chart-bars">
-          {monthlyRates.map((rate, i) => (
-            <div key={i} className="monthly-chart-bar-wrap">
-              <div style={{ flex: 1, display: 'flex', alignItems: 'flex-end', width: '100%' }}>
-                <div
-                  className="monthly-chart-bar"
-                  style={{
-                    height: `${Math.max(rate, 2)}%`,
-                    background: habit.color,
-                    opacity: rate > 0 ? 0.8 : 0.15,
-                  }}
-                />
-              </div>
-              <span className="monthly-chart-label">{getShortMonthName(i).charAt(0)}</span>
+        <HabitChart data={chartData} color={habit.color} label="Completion" />
+      </div>
+
+      {recentNotes.length > 0 && (
+        <div className="recent-notes-section">
+          <div className="recent-notes-title">Recent Notes</div>
+          {recentNotes.map(n => (
+            <div key={n.date} className="recent-note-item">
+              <span className="recent-note-date">{formatDateShort(n.date)}</span>
+              <span className="recent-note-text">
+                <Linkify>{n.note}</Linkify>
+              </span>
             </div>
           ))}
         </div>
-      </div>
+      )}
     </div>
   );
 }

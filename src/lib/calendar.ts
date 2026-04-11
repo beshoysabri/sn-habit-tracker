@@ -11,8 +11,17 @@ export function toDateStr(date: Date): string {
 }
 
 export function fromDateStr(str: string): Date {
+  if (!str || str.length < 8) return new Date();
   const [y, m, d] = str.split('-').map(Number);
+  if (isNaN(y) || isNaN(m) || isNaN(d)) return new Date();
   return new Date(y, m - 1, d);
+}
+
+export function formatDateShort(str: string): string {
+  if (!str || str.length < 8) return '-';
+  const d = fromDateStr(str);
+  if (isNaN(d.getTime())) return '-';
+  return `${getShortMonthName(d.getMonth())} ${d.getDate()}`;
 }
 
 export function todayStr(): string {
