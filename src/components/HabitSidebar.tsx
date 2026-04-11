@@ -3,6 +3,7 @@ import type { Habit, HabitTrackerData, HabitGroup } from '../types/habit.ts';
 import { getCompletionRate } from '../lib/stats.ts';
 import { getGroupedHabits } from '../lib/data.ts';
 import { HabitIcon } from '../lib/icons.tsx';
+import { hexToRgba } from '../lib/colors.ts';
 
 interface HabitSidebarProps {
   data: HabitTrackerData;
@@ -140,6 +141,7 @@ export function HabitSidebar({
                 {group && (
                   <div
                     className={`ht-sidebar-group-header ${dragGroupId === group.id ? 'dragging' : ''} ${dropTargetId === group.id ? 'drop-target' : ''}`}
+                    style={{ background: hexToRgba(group.color, 0.08) }}
                     draggable
                     onDragStart={(e) => handleDragStart(e, group.id)}
                     onDragEnd={handleDragEnd}
@@ -237,8 +239,7 @@ function HabitSidebarItem({
       className={`ht-sidebar-item ${isSelected ? 'selected' : ''}`}
       onClick={onClick}
     >
-      <div className="ht-sidebar-color" style={{ background: habit.color }} />
-      <span className="ht-sidebar-icon"><HabitIcon name={habit.icon} size={14} /></span>
+      <span className="ht-sidebar-icon"><HabitIcon name={habit.icon} size={14} color={habit.color} /></span>
       <span className="ht-sidebar-name">{habit.name}</span>
       <span className="ht-sidebar-pct">{pct}%</span>
     </div>

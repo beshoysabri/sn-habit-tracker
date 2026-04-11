@@ -2056,6 +2056,7 @@ body.sn-embedded {
     z-index: 50;
     gap: 6px;
   }
+  .ht-title-text { font-size: 14px; }
   .ht-title-input { width: 100%; }
   .ht-subtitle-input { width: 100%; }
   .ht-title-save-btn { align-self: flex-end; }
