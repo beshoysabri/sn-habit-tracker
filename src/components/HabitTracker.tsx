@@ -135,6 +135,11 @@ export function HabitTracker({ data, onChange }: HabitTrackerProps) {
     showToast('Group deleted');
   }, [data, onChange, showToast]);
 
+  // -- Title editing --
+  const handleUpdateTitle = useCallback((title: string, subtitle: string) => {
+    onChange({ ...data, title: title || undefined, subtitle: subtitle || undefined });
+  }, [data, onChange]);
+
   const handleReorderGroups = useCallback((orderedGroupIds: string[]) => {
     const newGroups = (data.groups ?? []).map(g => {
       const idx = orderedGroupIds.indexOf(g.id);
@@ -347,6 +352,7 @@ export function HabitTracker({ data, onChange }: HabitTrackerProps) {
         onAddHabit={() => { setEditingHabit(undefined); setShowHabitModal(true); }}
         onToggleSidebar={() => setSidebarOpen(s => !s)}
         onShowShortcuts={() => setShowShortcuts(s => !s)}
+        onUpdateTitle={handleUpdateTitle}
       />
 
       <div className={`ht-layout ${sidebarOpen ? 'sidebar-open' : ''}`}>

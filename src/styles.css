@@ -221,6 +221,85 @@ body.sn-embedded {
   color: var(--ht-fg);
 }
 
+.ht-title-display {
+  cursor: pointer;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+}
+
+.ht-title-text {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ht-fg);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ht-subtitle-text {
+  font-size: 12px;
+  color: var(--ht-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ht-title-edit {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+
+.ht-title-input {
+  font-size: 16px;
+  font-weight: 700;
+  font-family: inherit;
+  color: var(--ht-fg);
+  background: var(--ht-card-hover);
+  border: 1px solid var(--ht-border);
+  border-radius: var(--ht-radius-xs);
+  padding: 3px 8px;
+  width: 140px;
+  outline: none;
+}
+
+.ht-title-input:focus {
+  border-color: var(--ht-accent);
+}
+
+.ht-subtitle-input {
+  font-size: 12px;
+  font-family: inherit;
+  color: var(--ht-muted);
+  background: var(--ht-card-hover);
+  border: 1px solid var(--ht-border);
+  border-radius: var(--ht-radius-xs);
+  padding: 4px 8px;
+  width: 160px;
+  outline: none;
+}
+
+.ht-subtitle-input:focus {
+  border-color: var(--ht-accent);
+}
+
+.ht-title-save-btn {
+  font-size: 11px;
+  font-weight: 600;
+  font-family: inherit;
+  color: #fff;
+  background: var(--ht-accent);
+  border: none;
+  border-radius: var(--ht-radius-xs);
+  padding: 4px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
 .ht-header-right {
   display: flex;
   align-items: center;

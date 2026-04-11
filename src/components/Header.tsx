@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import type { ViewType } from '../types/habit.ts';
 import type { HabitTrackerData } from '../types/habit.ts';
 import { ExportMenu } from './shared/ExportMenu.tsx';
@@ -10,6 +10,7 @@ interface HeaderProps {
   onAddHabit: () => void;
   onToggleSidebar: () => void;
   onShowShortcuts: () => void;
+  onUpdateTitle: (title: string, subtitle: string) => void;
 }
 
 const VIEW_ICONS: { key: ViewType; label: string; short: string; icon: ReactNode }[] = [
@@ -39,7 +40,27 @@ const VIEW_ICONS: { key: ViewType; label: string; short: string; icon: ReactNode
   },
 ];
 
-export function Header({ data, view, onViewChange, onAddHabit, onToggleSidebar, onShowShortcuts }: HeaderProps) {
+export function Header({ data, view, onViewChange, onAddHabit, onToggleSidebar, onShowShortcuts, onUpdateTitle }: HeaderProps) {
+  const [editingTitle, setEditingTitle] = useState(false);
+  const [titleDraft, setTitleDraft] = useState('');
+  const [subtitleDraft, setSubtitleDraft] = useState('');
+
+  const handleStartEdit = () => {
+    setTitleDraft(data.title || '');
+    setSubtitleDraft(data.subtitle || '');
+    setEditingTitle(true);
+  };
+
+  const handleSaveTitle = () => {
+    onUpdateTitle(titleDraft.trim(), subtitleDraft.trim());
+    setEditingTitle(false);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') handleSaveTitle();
+    if (e.key === 'Escape') setEditingTitle(false);
+  };
+
   return (
     <div className="ht-header">
       <div className="ht-header-left">
@@ -50,7 +71,31 @@ export function Header({ data, view, onViewChange, onAddHabit, onToggleSidebar, 
             <line x1="2" y1="14" x2="16" y2="14"/>
           </svg>
         </button>
-        <span className="ht-year-display">{data.year}</span>
+        {editingTitle ? (
+          <div className="ht-title-edit">
+            <input
+              className="ht-title-input"
+              value={titleDraft}
+              onChange={(e) => setTitleDraft(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Page title"
+              autoFocus
+            />
+            <input
+              className="ht-subtitle-input"
+              value={subtitleDraft}
+              onChange={(e) => setSubtitleDraft(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Subtitle (optional)"
+            />
+            <button className="ht-title-save-btn" onClick={handleSaveTitle}>Save</button>
+          </div>
+        ) : (
+          <div className="ht-title-display" onDoubleClick={handleStartEdit} title="Double-click to edit">
+            <span className="ht-title-text">{data.title || data.year}</span>
+            {data.subtitle && <span className="ht-subtitle-text">{data.subtitle}</span>}
+          </div>
+        )}
       </div>
       <div className="ht-view-toggle">
         {VIEW_ICONS.map(v => (

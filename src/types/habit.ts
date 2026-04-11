@@ -3,6 +3,8 @@
 export interface HabitTrackerData {
   version: number;
   year: number;
+  title?: string;
+  subtitle?: string;
   habits: Habit[];
   groups: HabitGroup[];
   createdAt: string;
