@@ -19,7 +19,7 @@
   --ht-card-bg: var(--sn-stylekit-background-color, #1a1a1f);
   --ht-card-hover: var(--sn-stylekit-secondary-background-color, #27272a);
   --ht-border: var(--sn-stylekit-border-color, #27272a);
-  --ht-accent: var(--sn-stylekit-info-color, #6366f1);
+  --ht-accent: var(--sn-stylekit-info-color, #086DD6);
   --ht-danger: var(--sn-stylekit-danger-color, #ef4444);
   --ht-success: var(--sn-stylekit-success-color, #22c55e);
   --ht-warning: var(--sn-stylekit-warning-color, #eab308);
