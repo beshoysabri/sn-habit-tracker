@@ -1097,7 +1097,7 @@ body.sn-embedded {
 
 .habit-cell.cell-skipped {
   background: rgba(234, 179, 8, 0.25);
-  color: #eab308;
+  color: #a16207;
 }
 
 .habit-cell.cell-future {
@@ -1244,7 +1244,7 @@ body.sn-embedded {
 
 .month-cal-cell.cell-skipped {
   background: rgba(234, 179, 8, 0.2);
-  color: #eab308;
+  color: #a16207;
 }
 
 .month-cal-cell.cell-empty {
@@ -1364,7 +1364,7 @@ body.sn-embedded {
 
 .week-cell.cell-skipped {
   background: rgba(234, 179, 8, 0.2);
-  color: #eab308;
+  color: #a16207;
 }
 
 .week-cell.cell-empty {
@@ -1984,7 +1984,7 @@ body.sn-embedded {
 
 .timeline-cell.cell-skipped {
   background: rgba(234, 179, 8, 0.25);
-  color: #eab308;
+  color: #a16207;
 }
 
 .timeline-cell.cell-missed {
