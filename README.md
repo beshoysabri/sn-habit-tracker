@@ -1,18 +1,28 @@
-# Habit Tracker
+# Habit Tracker for Standard Notes
 
-A powerful, full-featured habit tracking editor for [Standard Notes](https://standardnotes.com). Track daily habits with heatmap calendars, timeline views, streaks, analytics, and detailed statistics -- all stored securely inside your encrypted notes.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-19-61dafb.svg)](https://react.dev/)
+[![Standard Notes](https://img.shields.io/badge/Standard%20Notes-Plugin-6366f1.svg)](https://standardnotes.com)
 
-Six distinct views. Boolean and counter tracking. Streaks, analytics, and export. Zero external dependencies. Your data never leaves Standard Notes.
+A powerful habit tracking editor for [Standard Notes](https://standardnotes.com). Track daily habits with heatmap calendars, timeline views, streaks, analytics, and detailed statistics -- all stored securely inside your encrypted notes.
 
-## Install
+### Quick Install
 
-Open Standard Notes, navigate to **Preferences > General > Advanced Settings > Install Custom Plugin**, and paste:
+Paste this URL in **Standard Notes > Preferences > Advanced Settings > Install Custom Plugin**:
 
 ```
 https://beshoysabri.github.io/sn-habit-tracker/ext.json
 ```
 
-Then create a new note and select **Habit Tracker** as the editor.
+### Highlights
+
+- **6 Views** — Year heatmap, Timeline, Month, Week, Day, Analytics
+- **Tracking** — Boolean (done/skipped/missed) and counter habits with targets
+- **Streaks** — Current and best streak tracking with leader boards
+- **Analytics** — Completion trends, group performance, day-of-week heatmap
+- **Export** — CSV, Markdown, Excel, PDF, and PNG formats
+- **Mobile Ready** — Responsive design with touch-friendly calendar views
 
 ---
 
