@@ -12,18 +12,18 @@
    * so SN's values take precedence when present.
    */
 
-  /* Derived tokens — fallback to dark palette when outside SN */
-  --ht-bg: var(--sn-stylekit-background-color, #1a1a1f);
-  --ht-fg: var(--sn-stylekit-foreground-color, #e4e4e7);
-  --ht-panel-bg: var(--sn-stylekit-contrast-background-color, #1a1a1f);
-  --ht-card-bg: var(--sn-stylekit-background-color, #1a1a1f);
-  --ht-card-hover: var(--sn-stylekit-secondary-background-color, #27272a);
-  --ht-border: var(--sn-stylekit-border-color, #27272a);
+  /* Derived tokens — SN injects theme vars, fallbacks for standalone */
+  --ht-bg: var(--sn-stylekit-background-color, #ffffff);
+  --ht-fg: var(--sn-stylekit-foreground-color, #19191c);
+  --ht-panel-bg: var(--sn-stylekit-contrast-background-color, #f4f4f4);
+  --ht-card-bg: var(--sn-stylekit-background-color, #ffffff);
+  --ht-card-hover: var(--sn-stylekit-secondary-background-color, #e8e8e8);
+  --ht-border: var(--sn-stylekit-border-color, #dfdfe0);
   --ht-accent: var(--sn-stylekit-info-color, #086DD6);
-  --ht-danger: var(--sn-stylekit-danger-color, #ef4444);
-  --ht-success: var(--sn-stylekit-success-color, #22c55e);
-  --ht-warning: var(--sn-stylekit-warning-color, #eab308);
-  --ht-muted: var(--sn-stylekit-secondary-foreground-color, #a1a1aa);
+  --ht-danger: var(--sn-stylekit-danger-color, #f80324);
+  --ht-success: var(--sn-stylekit-success-color, #2b9612);
+  --ht-warning: var(--sn-stylekit-warning-color, #cc8800);
+  --ht-muted: var(--sn-stylekit-secondary-foreground-color, #717178);
 
   /* Design tokens */
   --ht-radius: 10px;
